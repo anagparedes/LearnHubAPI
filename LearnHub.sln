@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B685C5D4-75E9-416C-8F04-17068237FEFE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{94FCAA17-1D8E-4207-8B08-E4C65AF2C3FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHub.test", "LearnHub.test\LearnHub.test.csproj", "{EDE79539-6C8B-4601-B813-45C098DA6695}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHub.Domain", "LearnHub.Domain\LearnHub.Domain.csproj", "{362972CB-3DFF-4DB7-8EB3-CA8482DD9E91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHub.Application", "LearnHub.Application\LearnHub.Application.csproj", "{E26C3EF1-5660-4671-AA56-7FF6348DAE96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHub.Infrastructure", "LearnHub.Infrastructure\LearnHub.Infrastructure.csproj", "{37B26A0F-190F-492E-931D-D35C7FF0C0D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearnHub.API", "LearnHub.API\LearnHub.API.csproj", "{E6F88E3D-E94F-4259-915E-6C124C9C6C88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDE79539-6C8B-4601-B813-45C098DA6695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDE79539-6C8B-4601-B813-45C098DA6695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDE79539-6C8B-4601-B813-45C098DA6695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDE79539-6C8B-4601-B813-45C098DA6695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{362972CB-3DFF-4DB7-8EB3-CA8482DD9E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{362972CB-3DFF-4DB7-8EB3-CA8482DD9E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{362972CB-3DFF-4DB7-8EB3-CA8482DD9E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{362972CB-3DFF-4DB7-8EB3-CA8482DD9E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E26C3EF1-5660-4671-AA56-7FF6348DAE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E26C3EF1-5660-4671-AA56-7FF6348DAE96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E26C3EF1-5660-4671-AA56-7FF6348DAE96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E26C3EF1-5660-4671-AA56-7FF6348DAE96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37B26A0F-190F-492E-931D-D35C7FF0C0D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37B26A0F-190F-492E-931D-D35C7FF0C0D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37B26A0F-190F-492E-931D-D35C7FF0C0D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37B26A0F-190F-492E-931D-D35C7FF0C0D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6F88E3D-E94F-4259-915E-6C124C9C6C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6F88E3D-E94F-4259-915E-6C124C9C6C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6F88E3D-E94F-4259-915E-6C124C9C6C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6F88E3D-E94F-4259-915E-6C124C9C6C88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EDE79539-6C8B-4601-B813-45C098DA6695} = {94FCAA17-1D8E-4207-8B08-E4C65AF2C3FC}
+		{362972CB-3DFF-4DB7-8EB3-CA8482DD9E91} = {B685C5D4-75E9-416C-8F04-17068237FEFE}
+		{E26C3EF1-5660-4671-AA56-7FF6348DAE96} = {B685C5D4-75E9-416C-8F04-17068237FEFE}
+		{37B26A0F-190F-492E-931D-D35C7FF0C0D9} = {B685C5D4-75E9-416C-8F04-17068237FEFE}
+		{E6F88E3D-E94F-4259-915E-6C124C9C6C88} = {B685C5D4-75E9-416C-8F04-17068237FEFE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4ACF6702-F35A-4108-8BD5-16327B3665E3}
+	EndGlobalSection
+EndGlobal
