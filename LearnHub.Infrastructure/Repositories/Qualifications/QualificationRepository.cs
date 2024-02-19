@@ -26,7 +26,7 @@ namespace LearnHub.Infrastructure.Repositories.Qualifications
 
         public async Task<Qualification?> GetbyCodeAsync(string qualificationCode)
         {
-            var qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(s => s.QualificationCode.Equals(qualificationCode));
+            var qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(s => s.QualificationCode == qualificationCode);
             if (qualification == null)
                 return null;
             return qualification;
@@ -91,7 +91,7 @@ namespace LearnHub.Infrastructure.Repositories.Qualifications
 
         public async Task<List<Qualification>?> DeleteAsync(string qualificationCode)
         {
-            var qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(s => s.QualificationCode.Equals(qualificationCode));
+            var qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(s => s.QualificationCode == qualificationCode);
             if (qualification == null)
                 return null;
 

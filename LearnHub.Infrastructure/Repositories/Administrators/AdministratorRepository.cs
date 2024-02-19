@@ -53,7 +53,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
 
         public async Task<Admin?> GetbyCodeAsync(string code)
         {
-            var admin = await _context.Set<Admin>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(code));
+            var admin = await _context.Set<Admin>().FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (admin == null)
                 return null;
             return admin;
@@ -61,7 +61,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
 
         public async Task<Admin?> UpdateAsync(string registrationCode, Admin entity)
         {
-            var admin = await _context.Set<Admin>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(registrationCode));
+            var admin = await _context.Set<Admin>().FirstOrDefaultAsync(s => s.RegistrationCode == registrationCode);
 
             if (admin == null)
                 return null;
@@ -89,7 +89,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
 
         public async Task<List<Admin>?> DeleteAsync(string registrationCode)
         {
-            var admin = await _context.Set<Admin>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(registrationCode));
+            var admin = await _context.Set<Admin>().FirstOrDefaultAsync(s => s.RegistrationCode == registrationCode);
             if (admin == null)
                 return null;
 

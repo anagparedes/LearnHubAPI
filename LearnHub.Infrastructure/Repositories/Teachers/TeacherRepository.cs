@@ -54,7 +54,7 @@ namespace LearnHub.Infrastructure.Repositories.Teachers
 
         public async Task<Teacher?> GetbyCodeAsync(string code)
         {
-            var teacher = await _context.Set<Teacher>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(code));
+            var teacher = await _context.Set<Teacher>().FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (teacher == null)
                 return null;
             return teacher;
@@ -62,7 +62,7 @@ namespace LearnHub.Infrastructure.Repositories.Teachers
 
         public async Task<Teacher?> UpdateAsync(string registrationCode, Teacher entity)
         {
-            var teacher = await _context.Set<Teacher>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(registrationCode));
+            var teacher = await _context.Set<Teacher>().FirstOrDefaultAsync(s => s.RegistrationCode == registrationCode);
 
             if (teacher == null)
                 return null;

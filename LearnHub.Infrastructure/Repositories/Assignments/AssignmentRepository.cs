@@ -27,7 +27,7 @@ namespace LearnHub.Infrastructure.Repositories.Assignments
 
         public async Task<Assignment?> GetbyCodeAsync(string assignmentCode)
         {
-            var assignment = await _context.Set<Assignment>().FirstOrDefaultAsync(s => s.AssignmentCode.Equals(assignmentCode));
+            var assignment = await _context.Set<Assignment>().FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
             if (assignment == null)
                 return null;
             return assignment;
@@ -136,7 +136,7 @@ namespace LearnHub.Infrastructure.Repositories.Assignments
 
         public async Task<List<Assignment>?> DeleteAsync(string assignmentCode)
         {
-            var assignment = await _context.Set<Assignment>().FirstOrDefaultAsync(s => s.AssignmentCode.Equals(assignmentCode));
+            var assignment = await _context.Set<Assignment>().FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
             if (assignment == null)
                 return null;
 

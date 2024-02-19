@@ -57,7 +57,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
 
         public async Task<Student?> GetbyCodeAsync(string code)
         {
-            var student = await _context.Set<Student>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(code));
+            var student = await _context.Set<Student>().FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (student == null)
                 return null;
             return student;
@@ -65,7 +65,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
 
         public async Task<Student?> UpdateAsync(string registrationCode, Student entity)
         {
-            var student = await _context.Set<Student>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(registrationCode));
+            var student = await _context.Set<Student>().FirstOrDefaultAsync(s => s.RegistrationCode == registrationCode);
 
             if (student == null)
                 return null;
@@ -96,7 +96,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
 
         public async Task<List<Student>?> DeleteAsync(string registrationCode)
         {
-            var student = await _context.Set<Student>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(registrationCode));
+            var student = await _context.Set<Student>().FirstOrDefaultAsync(s => s.RegistrationCode == registrationCode);
             if (student == null)
                 return null;
 

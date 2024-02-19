@@ -1,5 +1,4 @@
 ﻿using LearnHub.Application.Qualifications.Dtos;
-using LearnHub.Application.Qualifications.Dtos;
 using LearnHub.Application.Qualifications.Interfaces;
 using LearnHub.Application.Users.Exceptions;
 using Microsoft.AspNetCore.Http;

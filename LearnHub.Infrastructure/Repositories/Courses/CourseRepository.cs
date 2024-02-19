@@ -59,7 +59,7 @@ namespace LearnHub.Infrastructure.Repositories.Courses
 
         public async Task<Course?> GetbyCodeAsync(string courseCode)
         {
-            var course = await _context.Set<Course>().FirstOrDefaultAsync(s => s.CourseCode.Equals(courseCode));
+            var course = await _context.Set<Course>().FirstOrDefaultAsync(s => s.CourseCode == courseCode);
             if (course == null)
                 return null;
             return course;
@@ -99,7 +99,7 @@ namespace LearnHub.Infrastructure.Repositories.Courses
 
         public async Task<List<Course>?> DeleteAsync(string courseCode)
         {
-            var course = await _context.Set<Course>().FirstOrDefaultAsync(s => s.CourseCode.Equals(courseCode));
+            var course = await _context.Set<Course>().FirstOrDefaultAsync(s => s.CourseCode == courseCode);
             if (course == null)
                 return null;
 

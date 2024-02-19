@@ -36,7 +36,7 @@ namespace LearnHub.Infrastructure.Repositories.Users
 
         public async Task<User?> GetbyCodeAsync(string code)
         {
-            var user = await _context.Set<User>().FirstOrDefaultAsync(s => s.RegistrationCode.Equals(code));
+            var user = await _context.Set<User>().FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (user == null)
             {
                 return null;
