@@ -42,7 +42,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _teacherService.GetTeacherWithCourse(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
                 return NotFound($"An error occurred: {ex.Message}");
 
@@ -58,7 +58,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _teacherService.GetTeacherWithAssignment(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
                 return NotFound($"An error occurred: {ex.Message}");
             }
@@ -73,7 +73,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _teacherService.GetTeacherWithQualification(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
                 return NotFound($"An error occurred: {ex.Message}");
 
@@ -90,7 +90,7 @@ namespace LearnHub.API.Controllers
                 
                 return Ok(await _userService.AddTeacherAsync(newTeacher));
             }
-            catch (Exception ex)
+            catch (InvalidUserException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -104,7 +104,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.GetTeacherByIdAsync(id));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
@@ -121,7 +121,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.GetTeacherByCodeAsync(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
                 return NotFound($"An error occurred: {ex.Message}");
 
@@ -137,7 +137,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.UpdateTeacherAsync(registrationCode, teacher));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
@@ -154,7 +154,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.DeleteTeacherAsync(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");

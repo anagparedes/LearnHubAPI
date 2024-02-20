@@ -1,4 +1,5 @@
 ﻿using LearnHub.Application.Courses.Dtos;
+using LearnHub.Application.Courses.Exceptions;
 using LearnHub.Application.Courses.Interfaces;
 using LearnHub.Application.Students.Dtos;
 using LearnHub.Application.Users.Dtos;
@@ -27,7 +28,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _courseService.GetAllCoursesAsync());
             }
-            catch (UserEmptyListException ex)
+            catch (EmptyCourseListException ex)
             {
                 Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
                 return new List<GetCourse>();
@@ -42,7 +43,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _courseService.GetCourseByCodeAsync(courseCode));
             }
-            catch (UserEmptyListException ex)
+            catch (InvalidCourseException ex)
             {
 
                 return NotFound($"An error occurred: {ex.Message}");
@@ -58,7 +59,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _courseService.GetCourseWithStudentAsync(courseCode));
             }
-            catch (UserEmptyListException ex)
+            catch (InvalidCourseException ex)
             {
 
                 return NotFound($"An error occurred: {ex.Message}");
@@ -74,7 +75,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _courseService.AddInPersonCourseAsync(newCourse));
             }
-            catch (Exception ex)
+            catch (InvalidCourseException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -88,7 +89,7 @@ namespace LearnHub.API.Controllers
                
                 return Ok(await _courseService.AddOnlineCourseAsync(newCourse));
             }
-            catch (Exception ex)
+            catch (InvalidCourseException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -102,7 +103,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _courseService.AddStudentsToCourse(courseCode,studentCode));
                 
             }
-            catch (Exception ex)
+            catch (CourseOrStudentNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -116,7 +117,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _courseService.AddTeacherToCourse(courseCode, teacherCode));
 
             }
-            catch (Exception ex)
+            catch (CourseOrTeacherNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -131,7 +132,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _courseService.AddTeacherToCourse(courseCode, assignmentCode));
 
             }
-            catch (Exception ex)
+            catch (CourseOrAssignmentNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -145,7 +146,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _courseService.UpdateCourseAsync(id, createCourse));
             }
-            catch (UserEmptyListException ex)
+            catch (CourseNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
@@ -162,7 +163,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _courseService.DeleteCourseAsync(courseCode));
             }
-            catch (UserEmptyListException ex)
+            catch (CourseNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");

@@ -41,7 +41,7 @@ namespace LearnHub.API.Controllers
                 
                 return Ok(await _userService.AddAdminAsync(newAdmin));
             }
-            catch (Exception ex)
+            catch (InvalidUserException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -55,7 +55,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.GetAdminByIdAsync(id));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
@@ -72,10 +72,9 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.GetAdminByCodeAsync(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
                 return NotFound($"An error occurred: {ex.Message}");
-                //return StatusCode(404, $"An error occurred: {ex.Message}");
 
             }
 
@@ -89,7 +88,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.UpdateAdminAsync(registrationCode, admin));
             }
-            catch (UserEmptyListException ex)
+            catch (UserNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
@@ -106,7 +105,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _userService.DeleteAdminAsync(registrationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (InvalidUserException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");

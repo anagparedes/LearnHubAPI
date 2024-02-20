@@ -4,6 +4,7 @@ using LearnHub.Application.Users.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using LearnHub.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
+using LearnHub.Application.Assignments.Exceptions;
 
 namespace LearnHub.API.Controllers
 {
@@ -21,7 +22,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _assignmentService.GetAllAssignmentAsync());
             }
-            catch (UserEmptyListException ex)
+            catch (EmptyAssignmentListException ex)
             {
                 Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
                 return new List<GetAssignment>();
@@ -37,7 +38,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _assignmentService.GetAssignmentByCodeAsync(assignmentCode));
             }
-            catch (UserEmptyListException ex)
+            catch (AssignmentNotFoundException ex)
             {
 
                 return NotFound($"An error occurred: {ex.Message}");
@@ -54,7 +55,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _assignmentService.GetAssignmentWithStudentAsync(assignmentCode));
             }
-            catch (UserEmptyListException ex)
+            catch (AssignmentNotFoundException ex)
             {
 
                 return NotFound($"An error occurred: {ex.Message}");
@@ -71,7 +72,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _assignmentService.AddAssignmentAsync(createAssignment));
             }
-            catch (Exception ex)
+            catch (InvalidAssignmentException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -86,7 +87,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _assignmentService.AddCourseToAssignment(assignmentCode, courseCode));
 
             }
-            catch (Exception ex)
+            catch (AssignmentOrCourseNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -101,7 +102,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _assignmentService.AddStudentsToAssignment(assignmentCode, studentCode));
 
             }
-            catch (Exception ex)
+            catch (AssignmentOrStudentNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -116,7 +117,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _assignmentService.AddTeacherToAssignment(assignmentCode, teacherCode));
 
             }
-            catch (Exception ex)
+            catch (AssignmentOrTeacherNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -131,7 +132,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _assignmentService.UpdateAssignmentAsync(id, createAssignment));
 
             }
-            catch (Exception ex)
+            catch (AssignmentNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -146,7 +147,7 @@ namespace LearnHub.API.Controllers
                 return Ok(await _assignmentService.UpdateWithStudentResponseAsync(id, updateAssignment));
 
             }
-            catch (Exception ex)
+            catch (AssignmentNotFoundException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -160,7 +161,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _assignmentService.DeleteAssignmentAsync(assignmentCode));
             }
-            catch (UserEmptyListException ex)
+            catch (AssignmentNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");

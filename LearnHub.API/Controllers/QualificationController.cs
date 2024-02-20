@@ -1,4 +1,5 @@
 ﻿using LearnHub.Application.Qualifications.Dtos;
+using LearnHub.Application.Qualifications.Exceptions;
 using LearnHub.Application.Qualifications.Interfaces;
 using LearnHub.Application.Users.Exceptions;
 using LearnHub.Domain.Enums;
@@ -22,7 +23,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _qualificationService.GetAllQualificationsAsync());
             }
-            catch (UserEmptyListException ex)
+            catch (EmptyQualificationListException ex)
             {
                 Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
                 return new List<GetQualification>();
@@ -38,7 +39,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _qualificationService.GetQualificationByCodeAsync(qualificationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (QualificationNotFoundException ex)
             {
 
                 return NotFound($"An error occurred: {ex.Message}");
@@ -55,7 +56,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _qualificationService.AddQualificationAsync(createQualification, studentCode, assignmentCode, teacherCode));
             }
-            catch (Exception ex)
+            catch (InvalidQualificationException ex)
             {
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
@@ -69,7 +70,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _qualificationService.UpdateQualificationAsync(id, updateQualification, studentCode, assignmentCode));
             }
-            catch (UserEmptyListException ex)
+            catch (QualificationNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
@@ -86,7 +87,7 @@ namespace LearnHub.API.Controllers
             {
                 return Ok(await _qualificationService.DeleteQualificationAsync(qualificationCode));
             }
-            catch (UserEmptyListException ex)
+            catch (QualificationNotFoundException ex)
             {
 
                 return StatusCode(404, $"An error occurred: {ex.Message}");
