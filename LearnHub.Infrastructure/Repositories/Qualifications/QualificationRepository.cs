@@ -5,13 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LearnHub.Infrastructure.Repositories.Qualifications
 {
-    public class QualificationRepository : IQualificationRepository
+    public class QualificationRepository(LearnHubDbContext context) : IQualificationRepository
     {
-        private readonly LearnHubDbContext _context;
-        public QualificationRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
+        private readonly LearnHubDbContext _context = context;
 
         public async Task<List<Qualification>> GetAllAsync()
         {

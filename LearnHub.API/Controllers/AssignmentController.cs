@@ -1,10 +1,9 @@
 ﻿using LearnHub.Application.Assignments.Interfaces;
 using LearnHub.Application.Assignments.Dtos;
-using LearnHub.Application.Assignments.Services;
 using LearnHub.Application.Users.Exceptions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using LearnHub.Application.Courses.Dtos;
+using LearnHub.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LearnHub.API.Controllers
 {
@@ -14,6 +13,7 @@ namespace LearnHub.API.Controllers
     {
         private readonly IAssignmentService _assignmentService = assignmentService;
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetAllAssignments")]
         public async Task<ActionResult<List<GetAssignment>>> GetAllAssignments()
         {
@@ -29,6 +29,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetAssignmentByCode")]
         public async Task<ActionResult<GetAssignment>> GetAssignmentByCode(string assignmentCode)
         {
@@ -45,6 +46,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetAssignmentWithStudents")]
         public async Task<ActionResult<GetAssignmentWithStudent>> GetAssignmentWithStudents(string assignmentCode)
         {
@@ -61,6 +63,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpPost("/AddAssignment")]
         public async Task<ActionResult<GetAssignment>> AddAssignmentAsync(CreateAssignment createAssignment)
         {
@@ -74,6 +77,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddCourseToAssignment")]
         public async Task<ActionResult<GetAssignmentWithCourse>> AddCourseToAssignmentAsync(string assignmentCode, string courseCode)
         {
@@ -88,6 +92,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddStudentToAssignment")]
         public async Task<ActionResult<GetAssignmentWithStudent>> AddStudentToAssignmentAsync(string assignmentCode, string studentCode)
         {
@@ -101,6 +106,8 @@ namespace LearnHub.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddTeacherToAssignment")]
         public async Task<ActionResult<GetAssignmentWithTeacher>> AddTeacherToAssignmentAsync(string assignmentCode, string teacherCode)
         {
@@ -114,6 +121,8 @@ namespace LearnHub.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
+
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpPut("/UpdateAssignment")]
         public async Task<ActionResult<GetAssignment>> UpdateAssignmentAsync(int id, CreateAssignment createAssignment)
         {
@@ -128,6 +137,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Student))]
         [HttpPut("/UpdateAssignmentWithStudentResponse")]
         public async Task<ActionResult<GetAssignment>> UpdateAssignmentWithStudentResponseAsync(int id, UpdateAssignmentWithStudentResponse updateAssignment)
         {
@@ -142,6 +152,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpDelete("/DeleteAssignmentByCode")]
         public async Task<ActionResult<List<GetAssignment>>> DeleteAssignmentByCode(string assignmentCode)
         {

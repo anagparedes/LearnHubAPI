@@ -101,7 +101,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
 
         public async Task<Student?> GetStudentWithCourse(string code)
         {
-            var student = await _context.Set<Student>().Include(c => c.Enrollments).ThenInclude(e => e.Course).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            var student = await _context.Set<Student>().Include(c => c.Enrollments!).ThenInclude(e => e.Course).FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (student == null)
                 return null;
 
@@ -110,7 +110,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
 
         public async Task<Student?> GetStudentWithAssignment(string code)
         {
-            var student = await _context.Set<Student>().Include(c => c.AssignedAssignments).ThenInclude(e => e.Assignment).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            var student = await _context.Set<Student>().Include(c => c.AssignedAssignments!).ThenInclude(e => e.Assignment).FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (student == null)
                 return null;
 

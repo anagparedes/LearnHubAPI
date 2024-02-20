@@ -6,6 +6,8 @@ using LearnHub.Application.Users.Exceptions;
 using LearnHub.Application.Users.Interfaces;
 using LearnHub.Application.Users.Services;
 using LearnHub.Domain.Entities;
+using LearnHub.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +19,7 @@ namespace LearnHub.API.Controllers
     {
         private readonly ICourseService _courseService = courseService;
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAllCourses")]
         public async Task<ActionResult<List<GetCourse>>> GetAllCourses()
         {
@@ -31,7 +34,7 @@ namespace LearnHub.API.Controllers
             }
 
         }
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetCourseByCode")]
         public async Task<ActionResult<GetCourse>> GetCourseByCode(string courseCode)
         {
@@ -47,7 +50,7 @@ namespace LearnHub.API.Controllers
             }
 
         }
-
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetCourseWithStudent")]
         public async Task<ActionResult<GetCourseWithStudent>> GetCourseWithStudent(string courseCode)
         {
@@ -63,7 +66,7 @@ namespace LearnHub.API.Controllers
             }
 
         }
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddInPersonCourse")]
         public async Task<ActionResult<GetCourse>> AddInPersonCourseAsync(CreateCourse newCourse)
         {
@@ -76,7 +79,7 @@ namespace LearnHub.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddOnlineCourse")]
         public async Task<ActionResult<GetCourse>> AddOnlineCourseAsync(CreateCourse newCourse)
         {
@@ -90,7 +93,7 @@ namespace LearnHub.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddStudentToCourse")]
         public async Task<ActionResult<GetCourseWithStudent>> AddStudentToCourseAsync(string courseCode, string studentCode)
         {
@@ -104,7 +107,7 @@ namespace LearnHub.API.Controllers
                 return StatusCode(500, $"An error occurred: {ex.Message}");
             }
         }
-
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddTeacherToCourse")]
         public async Task<ActionResult<GetCourseWithTeacher>> AddTeacherToCourseAsync(string courseCode, string teacherCode)
         {
@@ -119,6 +122,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddAssignmentToCourse")]
         public async Task<ActionResult<GetCourseWithAssignment>> AddAssignmentToCourseAsync(string courseCode, string assignmentCode)
         {
@@ -133,6 +137,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPut("/UpdateCourseById")]
         public async Task<ActionResult<GetCourse>> UpdateCourseById(int id, CreateCourse createCourse)
         {
@@ -149,6 +154,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("/DeleteCourseByCode")]
         public async Task<ActionResult<List<GetCourse>>> DeleteCourseByCode(string courseCode)
         {

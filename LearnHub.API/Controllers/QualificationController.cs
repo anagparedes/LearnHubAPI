@@ -1,6 +1,8 @@
 ﻿using LearnHub.Application.Qualifications.Dtos;
 using LearnHub.Application.Qualifications.Interfaces;
 using LearnHub.Application.Users.Exceptions;
+using LearnHub.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +14,7 @@ namespace LearnHub.API.Controllers
     {
         private readonly IQualificationService _qualificationService = qualificationService;
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetAllQualifications")]
         public async Task<ActionResult<List<GetQualification>>> GetAllQualifications()
         {
@@ -27,6 +30,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetQualificationByCode")]
         public async Task<ActionResult<GetQualification>> GetQualificationByCode(string qualificationCode)
         {
@@ -43,6 +47,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpPost("/AddQualificationAsync")]
         public async Task<ActionResult<GetQualification>> AddQualificationAsync(CreateQualification createQualification, string studentCode, string assignmentCode, string teacherCode)
         {
@@ -56,6 +61,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpPut("/UpdateQualifiaction")]
         public async Task<ActionResult<GetQualification>> UpdateQualification(int id, CreateQualification updateQualification, string studentCode, string assignmentCode)
         {
@@ -71,6 +77,8 @@ namespace LearnHub.API.Controllers
             }
 
         }
+
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("/DeleteQualificationByCode")]
         public async Task<ActionResult<List<GetQualification>>> DeleteQualificationByCode(string qualificationCode)
         {

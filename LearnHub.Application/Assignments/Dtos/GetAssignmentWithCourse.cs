@@ -1,4 +1,5 @@
-﻿using LearnHub.Domain.Entities;
+﻿using LearnHub.Application.Courses.Dtos;
+using LearnHub.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace LearnHub.Application.Assignments.Dtos
         public string? AssignmentCode { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
-        public Course? Course { get; set; }
+        public GetCourse? Course { get; set; }
     }
 }

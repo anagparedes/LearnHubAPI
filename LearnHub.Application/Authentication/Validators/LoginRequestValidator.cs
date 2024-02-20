@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LearnHub.Application.Users.Validators
+namespace LearnHub.Application.Authentication.Validators
 {
     public class LoginRequestValidator : AbstractValidator<LoginRequest>
     {
@@ -17,7 +17,7 @@ namespace LearnHub.Application.Users.Validators
                 .EmailAddress()
                 .WithMessage("Por favor, ingrese una dirección de correo electrónico válida");
 
-            RuleFor(request => request.Password)
+            RuleFor(request => request.PasswordHash)
                 .NotEmpty()
                 .WithMessage("La contraseña es obligatoria");
         }

@@ -1,5 +1,7 @@
 ﻿using LearnHub.Application.Assignments.Interfaces;
 using LearnHub.Application.Assignments.Services;
+using LearnHub.Application.Authentication.Interfaces;
+using LearnHub.Application.Authentication.Services;
 using LearnHub.Application.Courses.Interfaces;
 using LearnHub.Application.Courses.Services;
 using LearnHub.Application.Qualifications.Interfaces;
@@ -24,7 +26,8 @@ namespace LearnHub.Application
                 .AddScoped<IAssignmentService, AssignmentService>()
                 .AddScoped<IQualificationService, QualificationService>()
                 .AddScoped<IStudentService, StudentService>()
-                .AddScoped<ITeacherService, TeacherService>();
+                .AddScoped<ITeacherService, TeacherService>()
+                .AddScoped<IAuthenticationService, AuthenticationService>();
                 //.AddScoped<IStudentService, StudentService>()
                 //.AddScoped<ITeacherService, TeacherService>()
                 //.AddScoped<IAdministratorService, AdminService>();

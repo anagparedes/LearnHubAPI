@@ -30,7 +30,7 @@ namespace LearnHub.Application.Assignments.AutoMappers
             CreateMap<Assignment, GetAssignmentWithTeacher>();
 
             CreateMap<Assignment, GetAssignmentWithStudent>()
-             .ForMember(dest => dest.AssignedStudents, opt => opt.MapFrom(src => src.AssignedStudents.Select(e => e.Student)));
+             .ForMember(dest => dest.AssignedStudents, opt => opt.MapFrom(src => src.AssignedStudents!.Select(e => e.Student)));
             CreateMap<GetAssignmentWithStudent, Assignment>();
         }
         

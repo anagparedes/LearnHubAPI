@@ -4,6 +4,8 @@ using LearnHub.Application.Users.Dtos;
 using LearnHub.Application.Users.Exceptions;
 using LearnHub.Application.Users.Interfaces;
 using LearnHub.Domain.Entities;
+using LearnHub.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +17,7 @@ namespace LearnHub.API.Controllers
     {
         private readonly IUserService _userService = userService;
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAllUsers")]
         public async Task<ActionResult<List<GetUser>>> GetAllUsers()
         {
@@ -29,7 +32,8 @@ namespace LearnHub.API.Controllers
             }
 
         }
-       
+
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetUserById")]
         public async Task<ActionResult<GetUser>> GetUserById(int id)
         {
@@ -45,7 +49,8 @@ namespace LearnHub.API.Controllers
             }
 
         }
-       
+
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetUserByCode")]
         public async Task<ActionResult<GetUser>> GetUserByCode(string registrationCode)
         {

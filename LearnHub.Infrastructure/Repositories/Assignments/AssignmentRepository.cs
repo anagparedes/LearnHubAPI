@@ -16,20 +16,26 @@ namespace LearnHub.Infrastructure.Repositories.Assignments
 
         public async Task<Assignment?> GetAssignmentWithStudentAsync(string assignmentCode)
         {
-            var assignment = await _context.Set<Assignment>().Include(c => c.AssignedStudents).ThenInclude(asg => asg.Student).FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
+            var assignment = await _context.Set<Assignment>().Include(c => c.AssignedStudents!).ThenInclude(asg => asg.Student).FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
             if (assignment == null)
                 return null;
             return assignment;
         }
 
-        public Task<Assignment?> GetAssignmentWithTeacherAsync(string assignmentCode)
+        public async Task<Assignment?> GetAssignmentWithTeacherAsync(string assignmentCode)
         {
-            throw new NotImplementedException();
+            var assignment = await _context.Set<Assignment>().Include(c => c.CreatedTeacher).FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
+            if (assignment == null)
+                return null;
+            return assignment;
         }
 
-        public Task<Assignment?> GetAssignmentWithCourseAsync(string assignmentCode)
+        public async Task<Assignment?> GetAssignmentWithCourseAsync(string assignmentCode)
         {
-            throw new NotImplementedException();
+            var assignment = await _context.Set<Assignment>().Include(c => c.Course).FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
+            if (assignment == null)
+                return null;
+            return assignment;
         }
 
         public async Task<Assignment?> GetbyCodeAsync(string assignmentCode)

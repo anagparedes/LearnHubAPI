@@ -58,7 +58,7 @@ namespace LearnHub.Infrastructure.Repositories.Courses
 
         public async Task<Course?> GetCourseWithStudentAsync(string courseCode)
         {
-            var course = await _context.Set<Course>().Include(c => c.Enrollments).ThenInclude(e => e.Student).FirstOrDefaultAsync(s => s.CourseCode == courseCode);
+            var course = await _context.Set<Course>().Include(c => c.Enrollments!).ThenInclude(e => e.Student).FirstOrDefaultAsync(s => s.CourseCode == courseCode);
             if (course == null)
                 return null;
             return course;

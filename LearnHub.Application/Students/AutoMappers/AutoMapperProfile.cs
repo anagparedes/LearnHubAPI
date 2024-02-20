@@ -23,7 +23,7 @@ namespace LearnHub.Application.Students.AutoMappers
             CreateMap<Student, GetStudentWithCourse>();
 
             CreateMap<Student, GetStudentWithCourse>()
-             .ForMember(dest => dest.EnrolledCourses, opt => opt.MapFrom(src => src.Enrollments.Select(e => e.Course)));
+             .ForMember(dest => dest.EnrolledCourses, opt => opt.MapFrom(src => src.Enrollments!.Select(e => e.Course)));
             CreateMap<GetStudentWithCourse, Student>();
 
         }

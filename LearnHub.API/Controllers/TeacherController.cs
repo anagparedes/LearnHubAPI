@@ -4,6 +4,8 @@ using LearnHub.Application.Teachers.Interfaces;
 using LearnHub.Application.Users.Exceptions;
 using LearnHub.Application.Users.Interfaces;
 using LearnHub.Domain.Entities;
+using LearnHub.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +18,7 @@ namespace LearnHub.API.Controllers
         private readonly ITeacherService _teacherService = teacherService;
         private readonly IUserService _userService = userService;
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAllTeachers")]
         public async Task<ActionResult<List<GetTeacher>>> GetAllTeachers()
         {
@@ -31,6 +34,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetTeacherCourses")]
         public async Task<ActionResult<GetTeacherWithCourse>> GetTeacherWithCourse(string registrationCode)
         {
@@ -46,6 +50,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetTeacherAssignments")]
         public async Task<ActionResult<GetStudent>> GetTeacherAssignments(string registrationCode)
         {
@@ -60,6 +65,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Teacher))]
         [HttpGet("/GetTeacherQualifications")]
         public async Task<ActionResult<GetStudent>> GetTeacherQualification(string registrationCode)
         {
@@ -75,6 +81,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddTeacher")]
         public async Task<ActionResult<GetTeacher>> AddTeacherAsync(CreateTeacher newTeacher)
         {
@@ -89,6 +96,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetTeacherById")]
         public async Task<ActionResult<GetTeacher>> GetTeacherById(int id)
         {
@@ -105,6 +113,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetTeacherByCode")]
         public async Task<ActionResult<GetTeacher>> GetTeacherByCode(string registrationCode)
         {
@@ -121,6 +130,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPut("/UpdateTeacherByCode")]
         public async Task<ActionResult<UpdateTeacher>> UpdateTeacherByCode(string registrationCode, UpdateTeacher teacher)
         {
@@ -137,6 +147,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("/DeleteTeacherByCode")]
         public async Task<ActionResult<List<GetTeacher>>> DeleteTeacherByCode(string registrationCode)
         {

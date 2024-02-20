@@ -5,14 +5,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LearnHub.Infrastructure.Repositories.Teachers
 {
-    public class TeacherRepository : ITeacherRepository
+    public class TeacherRepository(LearnHubDbContext context) : ITeacherRepository
     {
-        private readonly LearnHubDbContext _context;
+        private readonly LearnHubDbContext _context = context;
 
-        public TeacherRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
         public async Task<Teacher> AddAsync(Teacher newTeacher)
         {
             newTeacher.Role = Domain.Enums.Roles.Teacher;

@@ -2,8 +2,11 @@
 using LearnHub.Application.Users.Exceptions;
 using LearnHub.Application.Users.Interfaces;
 using LearnHub.Domain.Entities;
+using LearnHub.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace LearnHub.API.Controllers
 {
@@ -13,6 +16,7 @@ namespace LearnHub.API.Controllers
     {
         private readonly IUserService _userService = userService;
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAllAdmins")]
         public async Task<ActionResult<List<GetAdmin>>> GetAllAdmins()
         {
@@ -28,6 +32,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPost("/AddAdmin")]
         public async Task<ActionResult<GetAdmin>> AddAdminAsync(CreateAdmin newAdmin)
         {
@@ -42,6 +47,7 @@ namespace LearnHub.API.Controllers
             }
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAdminById")]
         public async Task<ActionResult<GetAdmin>> GetAdminById(int id)
         {
@@ -58,6 +64,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAdminByCode")]
         public async Task<ActionResult<GetAdmin>> GetAdminByCode(string registrationCode)
         {
@@ -74,6 +81,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpPut("/UpdateAdminByCode")]
         public async Task<ActionResult<GetAdmin>> UpdateAdminByCode(string registrationCode, UpdateAdmin admin)
         {
@@ -90,6 +98,7 @@ namespace LearnHub.API.Controllers
 
         }
 
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("/DeleteAdminByCode")]
         public async Task<ActionResult<List<GetAdmin>>> DeleteAdminByCode(string registrationCode)
         {

@@ -13,10 +13,9 @@ using System.Threading.Tasks;
 
 namespace LearnHub.Application.Assignments.Services
 {
-    public class AssignmentService(IAssignmentRepository assignmentRepository, IConfiguration configuration, IMapper mapper) : IAssignmentService
+    public class AssignmentService(IAssignmentRepository assignmentRepository, IMapper mapper) : IAssignmentService
     {
         private readonly IAssignmentRepository _assignmentRepository = assignmentRepository;
-        private readonly IConfiguration _configuration = configuration;
         private readonly IMapper _mapper = mapper;
 
         public async Task<List<GetAssignment>> GetAllAssignmentAsync()
