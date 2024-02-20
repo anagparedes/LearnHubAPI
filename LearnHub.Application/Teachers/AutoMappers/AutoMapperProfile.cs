@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using LearnHub.Application.Students.Dtos;
 using LearnHub.Application.Teachers.Dtos;
 using LearnHub.Domain.Entities;
 using System;
@@ -22,6 +23,19 @@ namespace LearnHub.Application.Teachers.AutoMappers
             CreateMap<UpdateTeacher, Teacher>();
             CreateMap<Teacher, UpdateTeacher>();
 
+            CreateMap<Teacher, GetTeacherWithAssignment>()
+             .ForMember(dest => dest.CreatedAssignments, opt => opt.MapFrom(src => src.CreatedAssignments));
+            CreateMap<GetTeacherWithAssignment, Teacher>();
+
+            CreateMap<Teacher, GetTeacherWithCourse>()
+            .ForMember(dest => dest.Courses, opt => opt.MapFrom(src => src.Courses))
+            .PreserveReferences();
+            CreateMap<GetTeacherWithCourse, Teacher>()
+                .PreserveReferences();
+
+            CreateMap<Teacher, GetTeacherWithQualification>()
+            .ForMember(dest => dest.Grades, opt => opt.MapFrom(src => src.Grades));
+            CreateMap<GetTeacherWithQualification, Teacher>();
         }
     }
 }

@@ -10,14 +10,9 @@ namespace LearnHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AssignmentController : ControllerBase
+    public class AssignmentController(IAssignmentService assignmentService) : ControllerBase
     {
-        private readonly IAssignmentService _assignmentService;
-
-        public AssignmentController(IAssignmentService assignmentService)
-        {
-            _assignmentService = assignmentService;
-        }
+        private readonly IAssignmentService _assignmentService = assignmentService;
 
         [HttpGet("/GetAllAssignments")]
         public async Task<ActionResult<List<GetAssignment>>> GetAllAssignments()
@@ -40,6 +35,22 @@ namespace LearnHub.API.Controllers
             try
             {
                 return Ok(await _assignmentService.GetAssignmentByCodeAsync(assignmentCode));
+            }
+            catch (UserEmptyListException ex)
+            {
+
+                return NotFound($"An error occurred: {ex.Message}");
+
+            }
+
+        }
+
+        [HttpGet("/GetAssignmentWithStudents")]
+        public async Task<ActionResult<GetAssignmentWithStudent>> GetAssignmentWithStudents(string assignmentCode)
+        {
+            try
+            {
+                return Ok(await _assignmentService.GetAssignmentWithStudentAsync(assignmentCode));
             }
             catch (UserEmptyListException ex)
             {

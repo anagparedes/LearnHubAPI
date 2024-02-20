@@ -9,14 +9,9 @@ namespace LearnHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AdminController : ControllerBase
+    public class AdminController(IUserService userService) : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        public AdminController(IUserService userService)
-        {
-            _userService = userService;
-        }
+        private readonly IUserService _userService = userService;
 
         [HttpGet("/GetAllAdmins")]
         public async Task<ActionResult<List<GetAdmin>>> GetAllAdmins()

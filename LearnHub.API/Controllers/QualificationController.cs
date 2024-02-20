@@ -8,13 +8,9 @@ namespace LearnHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class QualificationController : ControllerBase
+    public class QualificationController(IQualificationService qualificationService) : ControllerBase
     {
-        private readonly IQualificationService _qualificationService;
-        public QualificationController(IQualificationService qualificationService)
-        {
-            _qualificationService = qualificationService;
-        }
+        private readonly IQualificationService _qualificationService = qualificationService;
 
         [HttpGet("/GetAllQualifications")]
         public async Task<ActionResult<List<GetQualification>>> GetAllQualifications()

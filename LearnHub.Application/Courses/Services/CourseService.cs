@@ -15,18 +15,11 @@ using System.Threading.Tasks;
 
 namespace LearnHub.Application.Courses.Services
 {
-    public class CourseService : ICourseService
+    public class CourseService(ICourseRepository courseRepository, IMapper mapper) : ICourseService
     {
-        private readonly ICourseRepository _courseRepository;
-        private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
+        private readonly ICourseRepository _courseRepository = courseRepository;
+        private readonly IMapper _mapper = mapper;
 
-        public CourseService(ICourseRepository courseRepository, IConfiguration configuration, IMapper mapper)
-        {
-            _courseRepository = courseRepository;
-            _configuration = configuration;
-            _mapper = mapper;
-        }
         public async Task<List<GetCourse>> GetAllCoursesAsync()
         {
             var course = await _courseRepository.GetAllAsync();

@@ -1,27 +1,13 @@
-﻿using Azure.Core;
-using LearnHub.Application.Courses.Dtos;
-using LearnHub.Application.Students.Dtos;
-using LearnHub.Application.Users.Dtos;
-using LearnHub.Domain.Entities;
+﻿using LearnHub.Domain.Entities;
 using LearnHub.Domain.Interfaces;
-using LearnHub.Domain.Interfaces.Repositories;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Students
 {
-    public class StudentRepository: IStudentRepository
+    public class StudentRepository(LearnHubDbContext context) : IStudentRepository
     {
-        private readonly LearnHubDbContext _context;
-        public StudentRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
+        private readonly LearnHubDbContext _context = context;
 
         public async Task<Student> AddAsync(Student newStudent)
         {
@@ -108,7 +94,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
         public string GenerateUniqueNumericCode()
         {
             const string prefix = "102";
-            string randomPart = new string(Guid.NewGuid().ToString("N").Where(char.IsDigit).Take(4).ToArray());
+            string randomPart = new(Guid.NewGuid().ToString("N").Where(char.IsDigit).Take(4).ToArray());
             string uniqueCode = prefix + randomPart.PadRight(7 - prefix.Length, '0');
             return uniqueCode;
         }
@@ -116,6 +102,24 @@ namespace LearnHub.Infrastructure.Repositories.Students
         public async Task<Student?> GetStudentWithCourse(string code)
         {
             var student = await _context.Set<Student>().Include(c => c.Enrollments).ThenInclude(e => e.Course).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            if (student == null)
+                return null;
+
+            return student;
+        }
+
+        public async Task<Student?> GetStudentWithAssignment(string code)
+        {
+            var student = await _context.Set<Student>().Include(c => c.AssignedAssignments).ThenInclude(e => e.Assignment).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            if (student == null)
+                return null;
+
+            return student;
+        }
+
+        public async Task<Student?> GetStudentWithQualification(string code)
+        {
+            var student = await _context.Set<Student>().Include(c => c.Grades).FirstOrDefaultAsync(s => s.RegistrationCode == code);
             if (student == null)
                 return null;
 

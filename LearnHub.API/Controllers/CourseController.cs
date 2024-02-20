@@ -13,14 +13,9 @@ namespace LearnHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CourseController : ControllerBase
+    public class CourseController(ICourseService courseService) : ControllerBase
     {
-        private readonly ICourseService _courseService;
-
-        public CourseController(ICourseService courseService)
-        {
-            _courseService = courseService;
-        }
+        private readonly ICourseService _courseService = courseService;
 
         [HttpGet("/GetAllCourses")]
         public async Task<ActionResult<List<GetCourse>>> GetAllCourses()

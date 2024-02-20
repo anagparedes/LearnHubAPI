@@ -21,7 +21,6 @@ namespace LearnHub.Application.Users.Interfaces
         Task<GetStudent> AddStudentAsync(CreateStudent newStudent);
         Task<GetStudent?> GetStudentByIdAsync(int id);
         Task<GetStudent?> GetStudentByCodeAsync(string registrationCode);
-        Task<GetStudentWithCourse?> GetStudentWithCourseAsync(string registrationCode);
         Task<UpdateStudent?> UpdateStudentAsync(string registrationCode, UpdateStudent updateStudent);
         Task<List<GetStudent>?> DeleteStudentAsync(string registrationCode);
 

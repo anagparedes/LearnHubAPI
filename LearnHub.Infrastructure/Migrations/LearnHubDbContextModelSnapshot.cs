@@ -22,21 +22,6 @@ namespace LearnHub.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AssignmentStudent", b =>
-                {
-                    b.Property<int>("AssignedAssignmentsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AssignedStudentsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AssignedAssignmentsId", "AssignedStudentsId");
-
-                    b.HasIndex("AssignedStudentsId");
-
-                    b.ToTable("AssignmentStudent");
-                });
-
             modelBuilder.Entity("LearnHub.Domain.Entities.Assignment", b =>
                 {
                     b.Property<int>("Id")
@@ -51,14 +36,14 @@ namespace LearnHub.Infrastructure.Migrations
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CreatedTeacherId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StudentResponse")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TeacherId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
@@ -67,7 +52,7 @@ namespace LearnHub.Infrastructure.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("CreatedTeacherId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Assignments");
                 });
@@ -89,13 +74,13 @@ namespace LearnHub.Infrastructure.Migrations
                     b.Property<string>("CourseName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CourseType")
+                        .HasColumnType("int");
+
                     b.Property<int>("Period")
                         .HasColumnType("int");
 
                     b.Property<int>("Year")
-                        .HasColumnType("int");
-
-                    b.Property<int>("courseType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -116,27 +101,42 @@ namespace LearnHub.Infrastructure.Migrations
                     b.Property<int?>("AssignmentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EvaluatedTeacherId")
-                        .HasColumnType("int");
-
                     b.Property<string>("QualificationCode")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Score")
+                    b.Property<int?>("Score")
                         .HasColumnType("int");
 
                     b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AssignmentId");
 
-                    b.HasIndex("EvaluatedTeacherId");
-
                     b.HasIndex("StudentId");
 
+                    b.HasIndex("TeacherId");
+
                     b.ToTable("Qualifications");
+                });
+
+            modelBuilder.Entity("LearnHub.Domain.Entities.StudentAssignment", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AssignmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StudentId", "AssignmentId");
+
+                    b.HasIndex("AssignmentId");
+
+                    b.ToTable("StudentAssignments");
                 });
 
             modelBuilder.Entity("LearnHub.Domain.Entities.StudentCourse", b =>
@@ -251,6 +251,9 @@ namespace LearnHub.Infrastructure.Migrations
                     b.Property<string>("Career")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CareerArea")
+                        .HasColumnType("int");
+
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
@@ -263,36 +266,20 @@ namespace LearnHub.Infrastructure.Migrations
                     b.Property<string>("Telephone")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("careerArea")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("Teacher");
-                });
-
-            modelBuilder.Entity("AssignmentStudent", b =>
-                {
-                    b.HasOne("LearnHub.Domain.Entities.Assignment", null)
-                        .WithMany()
-                        .HasForeignKey("AssignedAssignmentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("LearnHub.Domain.Entities.Student", null)
-                        .WithMany()
-                        .HasForeignKey("AssignedStudentsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("LearnHub.Domain.Entities.Assignment", b =>
                 {
                     b.HasOne("LearnHub.Domain.Entities.Course", "Course")
                         .WithMany("Assignments")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("LearnHub.Domain.Entities.Teacher", "CreatedTeacher")
                         .WithMany("CreatedAssignments")
-                        .HasForeignKey("CreatedTeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Course");
 
@@ -303,7 +290,8 @@ namespace LearnHub.Infrastructure.Migrations
                 {
                     b.HasOne("LearnHub.Domain.Entities.Teacher", "AssignedTeacher")
                         .WithMany("Courses")
-                        .HasForeignKey("AssignedTeacherId");
+                        .HasForeignKey("AssignedTeacherId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("AssignedTeacher");
                 });
@@ -314,17 +302,38 @@ namespace LearnHub.Infrastructure.Migrations
                         .WithMany("Qualifications")
                         .HasForeignKey("AssignmentId");
 
-                    b.HasOne("LearnHub.Domain.Entities.Teacher", "EvaluatedTeacher")
-                        .WithMany("Grades")
-                        .HasForeignKey("EvaluatedTeacherId");
-
                     b.HasOne("LearnHub.Domain.Entities.Student", "Student")
                         .WithMany("Grades")
-                        .HasForeignKey("StudentId");
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LearnHub.Domain.Entities.Teacher", "EvaluatedTeacher")
+                        .WithMany("Grades")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Assignment");
 
                     b.Navigation("EvaluatedTeacher");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("LearnHub.Domain.Entities.StudentAssignment", b =>
+                {
+                    b.HasOne("LearnHub.Domain.Entities.Assignment", "Assignment")
+                        .WithMany("AssignedStudents")
+                        .HasForeignKey("AssignmentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("LearnHub.Domain.Entities.Student", "Student")
+                        .WithMany("AssignedAssignments")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Assignment");
 
                     b.Navigation("Student");
                 });
@@ -334,13 +343,13 @@ namespace LearnHub.Infrastructure.Migrations
                     b.HasOne("LearnHub.Domain.Entities.Course", "Course")
                         .WithMany("Enrollments")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("LearnHub.Domain.Entities.Student", "Student")
                         .WithMany("Enrollments")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Course");
@@ -350,6 +359,8 @@ namespace LearnHub.Infrastructure.Migrations
 
             modelBuilder.Entity("LearnHub.Domain.Entities.Assignment", b =>
                 {
+                    b.Navigation("AssignedStudents");
+
                     b.Navigation("Qualifications");
                 });
 
@@ -362,6 +373,8 @@ namespace LearnHub.Infrastructure.Migrations
 
             modelBuilder.Entity("LearnHub.Domain.Entities.Student", b =>
                 {
+                    b.Navigation("AssignedAssignments");
+
                     b.Navigation("Enrollments");
 
                     b.Navigation("Grades");

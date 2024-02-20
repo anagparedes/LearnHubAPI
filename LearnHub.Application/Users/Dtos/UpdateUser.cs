@@ -11,7 +11,7 @@ namespace LearnHub.Application.Users.Dtos
     {
         public string? FullName { get; set; }
         public string? Email { get; set; }
-        public string? registrationCode { get; set; }
+        public string? RegistrationCode { get; set; }
         public Roles Role { get; set; }
 
     }

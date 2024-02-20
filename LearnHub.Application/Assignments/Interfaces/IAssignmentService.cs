@@ -12,6 +12,9 @@ namespace LearnHub.Application.Assignments.Interfaces
     {
         Task<List<GetAssignment>> GetAllAssignmentAsync();
         Task<GetAssignment?> GetAssignmentByCodeAsync(string assignmentCode);
+        Task<GetAssignmentWithCourse?> GetAssignmentWithCourseAsync(string assignmentCode);
+        Task<GetAssignmentWithTeacher?> GetAssignmentWithTeacherAsync(string assignmentCode);
+        Task<GetAssignmentWithStudent?> GetAssignmentWithStudentAsync(string assignmentCode);
         Task<GetAssignment> AddAssignmentAsync(CreateAssignment createAssignment);
         Task<GetAssignment?> UpdateAssignmentAsync(int id, CreateAssignment createAssignment);
         Task<List<GetAssignment>?> DeleteAssignmentAsync(string assignmentCode);

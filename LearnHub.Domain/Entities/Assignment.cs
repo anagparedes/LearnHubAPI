@@ -13,8 +13,10 @@ namespace LearnHub.Domain.Entities
     {
         public string? AssignmentCode { get; set; }
         public Course? Course { get; set; }
+        public int? CourseId { get; set; }
         public Teacher? CreatedTeacher { get; set; }
-        public List<Student>? AssignedStudents { get; set; }
+        public int? TeacherId { get; set; }
+        public List<StudentAssignment>? AssignedStudents { get; set; }
         public List<Qualification>? Qualifications { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }

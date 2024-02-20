@@ -13,23 +13,32 @@ using System.Threading.Tasks;
 
 namespace LearnHub.Application.Assignments.Services
 {
-    public class AssignmentService : IAssignmentService
+    public class AssignmentService(IAssignmentRepository assignmentRepository, IConfiguration configuration, IMapper mapper) : IAssignmentService
     {
-        private readonly IAssignmentRepository _assignmentRepository;
-        private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
-        public AssignmentService(IAssignmentRepository assignmentRepository, IConfiguration configuration, IMapper mapper)
-        {
-            _assignmentRepository = assignmentRepository;
-            _configuration = configuration;
-            _mapper = mapper;
-
-        }
+        private readonly IAssignmentRepository _assignmentRepository = assignmentRepository;
+        private readonly IConfiguration _configuration = configuration;
+        private readonly IMapper _mapper = mapper;
 
         public async Task<List<GetAssignment>> GetAllAssignmentAsync()
         {
             var assignment = await _assignmentRepository.GetAllAsync();
             return assignment.Select(work => _mapper.Map<GetAssignment>(work)).ToList();
+        }
+
+        public async Task<GetAssignmentWithStudent?> GetAssignmentWithStudentAsync(string assignmentCode)
+        {
+            var assignment = await _assignmentRepository.GetAssignmentWithStudentAsync(assignmentCode);
+            return _mapper.Map<GetAssignmentWithStudent>(assignment);
+        }
+
+        public Task<GetAssignmentWithCourse?> GetAssignmentWithCourseAsync(string assignmentCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<GetAssignmentWithTeacher?> GetAssignmentWithTeacherAsync(string assignmentCode)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<GetAssignment?> GetAssignmentByCodeAsync(string assignmentCode)
@@ -90,6 +99,5 @@ namespace LearnHub.Application.Assignments.Services
             var assignment = await _assignmentRepository.DeleteAsync(assignmentCode);
             return assignment?.Select(assign => _mapper.Map<GetAssignment>(assign)).ToList();
         }
-
     }
 }

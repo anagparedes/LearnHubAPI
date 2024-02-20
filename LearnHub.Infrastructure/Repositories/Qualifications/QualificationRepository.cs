@@ -1,13 +1,7 @@
-﻿using LearnHub.Application.Courses.Dtos;
-using LearnHub.Domain.Entities;
+﻿using LearnHub.Domain.Entities;
 using LearnHub.Domain.Interfaces;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Qualifications
 {
@@ -104,7 +98,7 @@ namespace LearnHub.Infrastructure.Repositories.Qualifications
         public string GenerateUniqueQualificationCode()
         {
             string prefix = "QUALIFICATION-";
-            string uniqueCode = Guid.NewGuid().ToString("N").Substring(0, 7).ToUpper();
+            string uniqueCode = Guid.NewGuid().ToString("N")[..7].ToUpper();
             return prefix + uniqueCode;
         }
     }

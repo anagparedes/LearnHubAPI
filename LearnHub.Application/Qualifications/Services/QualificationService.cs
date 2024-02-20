@@ -13,18 +13,11 @@ using System.Threading.Tasks;
 
 namespace LearnHub.Application.Qualifications.Services
 {
-    public class QualificationService: IQualificationService
+    public class QualificationService(IQualificationRepository qualificationRepository, IMapper mapper) : IQualificationService
     {
-        private readonly IQualificationRepository _qualificationRepository;
-        private readonly IConfiguration _configuration;
-        private readonly IMapper _mapper;
+        private readonly IQualificationRepository _qualificationRepository = qualificationRepository;
+        private readonly IMapper _mapper = mapper;
 
-        public QualificationService(IQualificationRepository qualificationRepository, IConfiguration configuration, IMapper mapper)
-        {
-            _qualificationRepository = qualificationRepository;
-            _configuration = configuration;
-            _mapper = mapper;
-        }
         public async Task<List<GetQualification>> GetAllQualificationsAsync()
         {
             var qualification = await _qualificationRepository.GetAllAsync();

@@ -19,7 +19,6 @@ namespace LearnHub.Domain.Entities
         public string? Email { get; set; }
         public string? RegistrationCode { get; set; }
         public string? PasswordHash { get; set; }
-
         public Roles Role { get; set; }
 
     }

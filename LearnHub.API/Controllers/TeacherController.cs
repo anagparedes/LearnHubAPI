@@ -1,4 +1,6 @@
-﻿using LearnHub.Application.Teachers.Dtos;
+﻿using LearnHub.Application.Students.Dtos;
+using LearnHub.Application.Teachers.Dtos;
+using LearnHub.Application.Teachers.Interfaces;
 using LearnHub.Application.Users.Exceptions;
 using LearnHub.Application.Users.Interfaces;
 using LearnHub.Domain.Entities;
@@ -9,14 +11,10 @@ namespace LearnHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TeacherController : ControllerBase
+    public class TeacherController(ITeacherService teacherService, IUserService userService) : ControllerBase
     {
-        private readonly IUserService _userService;
-
-        public TeacherController(IUserService userService)
-        {
-            _userService = userService;
-        }
+        private readonly ITeacherService _teacherService = teacherService;
+        private readonly IUserService _userService = userService;
 
         [HttpGet("/GetAllTeachers")]
         public async Task<ActionResult<List<GetTeacher>>> GetAllTeachers()
@@ -29,6 +27,50 @@ namespace LearnHub.API.Controllers
             {
                 Console.WriteLine($"An error occurred while retrieving users: {ex.Message}");
                 return new List<GetTeacher>();
+            }
+
+        }
+
+        [HttpGet("/GetTeacherCourses")]
+        public async Task<ActionResult<GetTeacherWithCourse>> GetTeacherWithCourse(string registrationCode)
+        {
+            try
+            {
+                return Ok(await _teacherService.GetTeacherWithCourse(registrationCode));
+            }
+            catch (UserEmptyListException ex)
+            {
+                return NotFound($"An error occurred: {ex.Message}");
+
+            }
+
+        }
+
+        [HttpGet("/GetTeacherAssignments")]
+        public async Task<ActionResult<GetStudent>> GetTeacherAssignments(string registrationCode)
+        {
+            try
+            {
+                return Ok(await _teacherService.GetTeacherWithAssignment(registrationCode));
+            }
+            catch (UserEmptyListException ex)
+            {
+                return NotFound($"An error occurred: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet("/GetTeacherQualifications")]
+        public async Task<ActionResult<GetStudent>> GetTeacherQualification(string registrationCode)
+        {
+            try
+            {
+                return Ok(await _teacherService.GetTeacherWithQualification(registrationCode));
+            }
+            catch (UserEmptyListException ex)
+            {
+                return NotFound($"An error occurred: {ex.Message}");
+
             }
 
         }

@@ -17,6 +17,6 @@ namespace LearnHub.Application.Courses.Dtos
         public Teacher? AssignedTeacher { get; set; }
         public List<Student>? Students { get; set; }
         public List<Assignment>? Assignments { get; set; }
-        public CourseTypes courseTypes { get; set; }
+        public CourseTypes CourseTypes { get; set; }
     }
 }

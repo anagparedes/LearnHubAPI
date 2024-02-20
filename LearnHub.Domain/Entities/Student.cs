@@ -16,9 +16,9 @@ namespace LearnHub.Domain.Entities
         public string? IdentificationCard { get; set; }
         public string? Telephone { get; set; }
         public StudentStatus Status { get; set; }
-        public List<Assignment>? AssignedAssignments { get; set; }
+        public List<StudentAssignment>? AssignedAssignments { get; set; }
         public List<Qualification>? Grades { get; set; }
-        public List<StudentCourse> Enrollments { get; set; } = new List<StudentCourse>();
+        public List<StudentCourse>? Enrollments { get; set; }
 
     }
 }

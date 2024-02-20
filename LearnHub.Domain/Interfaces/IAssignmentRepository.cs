@@ -11,6 +11,9 @@ namespace LearnHub.Domain.Interfaces
     {
         Task<List<Assignment>> GetAllAsync();
         Task<Assignment?> GetbyCodeAsync(string assignmentCode);
+        Task<Assignment?> GetAssignmentWithStudentAsync(string assignmentCode);
+        Task<Assignment?> GetAssignmentWithTeacherAsync(string assignmentCode);
+        Task<Assignment?> GetAssignmentWithCourseAsync(string assignmentCode);
         Task<Assignment?> UpdateAsync(int id, Assignment newAssignment);
         Task<Assignment?> UpdateWithStudentResponseAsync(int id, Assignment newAssignment);
         Task<List<Assignment>?> DeleteAsync(string assignmentCode);

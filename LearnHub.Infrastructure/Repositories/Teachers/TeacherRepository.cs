@@ -1,16 +1,7 @@
-﻿using LearnHub.Application.Students.Dtos;
-using LearnHub.Application.Teachers.Dtos;
-using LearnHub.Application.Users.Dtos;
-using LearnHub.Domain.Entities;
+﻿using LearnHub.Domain.Entities;
 using LearnHub.Domain.Interfaces;
-using LearnHub.Domain.Interfaces.Repositories;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Teachers
 {
@@ -59,7 +50,14 @@ namespace LearnHub.Infrastructure.Repositories.Teachers
                 return null;
             return teacher;
         }
+        public async Task<Teacher?> GetTeacherWithCourse(string code)
+        {
+            var teacher = await _context.Set<Teacher>().Include(t => t.Courses).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            if (teacher == null)
+                return null;
 
+            return teacher;
+        }
         public async Task<Teacher?> UpdateAsync(string registrationCode, Teacher entity)
         {
             var teacher = await _context.Set<Teacher>().FirstOrDefaultAsync(s => s.RegistrationCode == registrationCode);
@@ -71,7 +69,7 @@ namespace LearnHub.Infrastructure.Repositories.Teachers
             teacher.LastName = entity.LastName;
             teacher.FullName = $"{entity.FirstName} {entity.LastName}";
             teacher.Email = entity.Email;
-            teacher.careerArea = entity.careerArea;
+            teacher.CareerArea = entity.CareerArea;
             teacher.Career = entity.Career;
             teacher.Status = entity.Status;
             if (teacher.RegistrationCode is null)
@@ -106,11 +104,27 @@ namespace LearnHub.Infrastructure.Repositories.Teachers
         public string GenerateUniqueNumericCode()
         {
             const string prefix = "103";
-            string randomPart = new string(Guid.NewGuid().ToString("N").Where(char.IsDigit).Take(4).ToArray());
+            string randomPart = new(Guid.NewGuid().ToString("N").Where(char.IsDigit).Take(4).ToArray());
             string uniqueCode = prefix + randomPart.PadRight(7 - prefix.Length, '0');
             return uniqueCode;
         }
 
-        
+        public async Task<Teacher?> GetTeacherWithAssignment(string code)
+        {
+            var teacher = await _context.Set<Teacher>().Include(c => c.CreatedAssignments).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            if (teacher == null)
+                return null;
+
+            return teacher;
+        }
+
+        public async Task<Teacher?> GetTeacherWithQualification(string code)
+        {
+            var teacher = await _context.Set<Teacher>().Include(c => c.Grades).FirstOrDefaultAsync(s => s.RegistrationCode == code);
+            if (teacher == null)
+                return null;
+
+            return teacher;
+        }
     }
 }

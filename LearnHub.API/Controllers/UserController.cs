@@ -11,15 +11,10 @@ namespace LearnHub.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IUserService userService) : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserService _userService = userService;
 
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
-       
         [HttpGet("/GetAllUsers")]
         public async Task<ActionResult<List<GetUser>>> GetAllUsers()
         {

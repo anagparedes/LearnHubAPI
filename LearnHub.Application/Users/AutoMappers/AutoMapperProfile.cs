@@ -13,9 +13,6 @@ namespace LearnHub.Application.Users.AutoMappers
     {
         public AutoMapperProfile()
         {
-            CreateMap<CreateUser, User>();
-            CreateMap<User, CreateUser>();
-
             CreateMap<GetUser, User>();
             CreateMap<User, GetUser>();
 

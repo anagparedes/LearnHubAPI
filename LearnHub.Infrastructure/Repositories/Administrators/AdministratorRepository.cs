@@ -1,25 +1,13 @@
-﻿using LearnHub.Application.Administrators.Dtos;
-using LearnHub.Application.Users.Interfaces;
-using LearnHub.Domain.Entities;
+﻿using LearnHub.Domain.Entities;
 using LearnHub.Domain.Interfaces;
-using LearnHub.Domain.Interfaces.Repositories;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Administrators
 {
-    public class AdministratorRepository: IAdministratorRepository
+    public class AdministratorRepository(LearnHubDbContext context) : IAdministratorRepository
     {
-        private readonly LearnHubDbContext _context;
-        public AdministratorRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
+        private readonly LearnHubDbContext _context = context;
 
         public async Task<Admin> AddAsync(Admin newAdmin)
         {
@@ -101,7 +89,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
         public string GenerateUniqueNumericCode()
         {
             const string prefix = "101";
-            string randomPart = new string(Guid.NewGuid().ToString("N").Where(char.IsDigit).Take(4).ToArray());
+            string randomPart = new(Guid.NewGuid().ToString("N").Where(char.IsDigit).Take(4).ToArray());
             string uniqueCode = prefix + randomPart.PadRight(7 - prefix.Length, '0');
             return uniqueCode;
         }

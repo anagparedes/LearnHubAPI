@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LearnHub.Application.Users.Exceptions
+{
+    public class UpdatingUserFailedException: Exception
+    {
+        public override string Message { get; }
+
+        public UpdatingUserFailedException() : base()
+        {
+            Message = "The list of Users is empty";
+        }
+    }
+}

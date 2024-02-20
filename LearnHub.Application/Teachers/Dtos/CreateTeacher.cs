@@ -14,7 +14,7 @@ namespace LearnHub.Application.Teachers.Dtos
         public string? LastName { get; set; }
         public Gender Gender { get; set; }
         public string? Career { get; set; }
-        public CareerArea careerArea { get; set; }
+        public CareerArea CareerArea { get; set; }
         public string? Telephone { get; set; }
         public string? PasswordHash { get; set; }
     }

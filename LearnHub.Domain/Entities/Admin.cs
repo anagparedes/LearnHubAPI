@@ -11,5 +11,6 @@ namespace LearnHub.Domain.Entities
 {
     public class Admin : User
     {
+
     }
 }

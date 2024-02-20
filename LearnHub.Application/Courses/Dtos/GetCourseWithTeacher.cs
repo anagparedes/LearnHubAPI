@@ -14,7 +14,7 @@ namespace LearnHub.Application.Courses.Dtos
         public string? CourseName { get; set; }
         public int Period { get; set; }
         public int Year { get; set; }
-        public CourseTypes courseTypes { get; set; }
+        public CourseTypes CourseTypes { get; set; }
         public Teacher? AssignedTeacher { get; set; }
     }
 }

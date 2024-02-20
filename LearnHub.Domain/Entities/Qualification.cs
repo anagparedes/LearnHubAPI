@@ -12,9 +12,12 @@ namespace LearnHub.Domain.Entities
     {
         public string? QualificationCode { get; set; }
         public Student? Student { get; set; }
+        public int? StudentId { get; set; }
         public Assignment? Assignment { get; set; }
+        public int? AssignmentId { get; set; }
         public Teacher? EvaluatedTeacher { get; set; }
-        public int Score { get; set; }
+        public int? TeacherId { get; set; }
+        public int? Score { get; set; }
 
     }
 }

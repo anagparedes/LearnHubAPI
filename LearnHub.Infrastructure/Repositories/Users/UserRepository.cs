@@ -1,26 +1,14 @@
-﻿using Azure.Core;
-using LearnHub.Domain.Entities;
+﻿using LearnHub.Domain.Entities;
 using LearnHub.Domain.Interfaces;
-using LearnHub.Domain.Interfaces.Repositories;
-using LearnHub.Domain.Models;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Users
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository(LearnHubDbContext context) : IUserRepository
     {
-        private readonly LearnHubDbContext _context;
+        private readonly LearnHubDbContext _context = context;
 
-        public UserRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
         public async Task<List<User>> GetAllAsync()
         {
             return await _context.Set<User>().ToListAsync();
@@ -46,7 +34,7 @@ namespace LearnHub.Infrastructure.Repositories.Users
 
         public string GenerateUniqueCode()
         {
-            return Guid.NewGuid().ToString("N").Substring(0, 7).ToUpper();
+            return Guid.NewGuid().ToString("N")[..7].ToUpper();
         }
     }
 }

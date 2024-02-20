@@ -10,6 +10,9 @@ namespace LearnHub.Domain.Interfaces
     public interface ITeacherRepository : IRepository<Teacher>
     {
         Task<Teacher?> GetbyCodeAsync(string code);
+        Task<Teacher?> GetTeacherWithCourse(string code);
+        Task<Teacher?> GetTeacherWithAssignment(string code);
+        Task<Teacher?> GetTeacherWithQualification(string code);
         string GenerateUniqueNumericCode();
     }
 }

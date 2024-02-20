@@ -11,7 +11,7 @@ namespace LearnHub.Domain.Entities
 {
     public class Teacher: User, IUser
     {
-        public CareerArea careerArea {  get; set; }
+        public CareerArea CareerArea {  get; set; }
         public TeacherStatus Status { get; set; }
         public Gender Gender { get; set; }
         public string? Telephone { get; set; }

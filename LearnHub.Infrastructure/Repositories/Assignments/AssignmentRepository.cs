@@ -1,28 +1,35 @@
-﻿using LearnHub.Application.Courses.Dtos;
-using LearnHub.Application.Students.Dtos;
-using LearnHub.Domain.Entities;
+﻿using LearnHub.Domain.Entities;
 using LearnHub.Domain.Interfaces;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Assignments
 {
-    public class AssignmentRepository : IAssignmentRepository
+    public class AssignmentRepository(LearnHubDbContext context) : IAssignmentRepository
     {
-        private readonly LearnHubDbContext _context;
-        public AssignmentRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
+        private readonly LearnHubDbContext _context = context;
 
         public async Task<List<Assignment>> GetAllAsync()
         {
             return await _context.Set<Assignment>().ToListAsync();
+        }
+
+        public async Task<Assignment?> GetAssignmentWithStudentAsync(string assignmentCode)
+        {
+            var assignment = await _context.Set<Assignment>().Include(c => c.AssignedStudents).ThenInclude(asg => asg.Student).FirstOrDefaultAsync(s => s.AssignmentCode == assignmentCode);
+            if (assignment == null)
+                return null;
+            return assignment;
+        }
+
+        public Task<Assignment?> GetAssignmentWithTeacherAsync(string assignmentCode)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Assignment?> GetAssignmentWithCourseAsync(string assignmentCode)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Assignment?> GetbyCodeAsync(string assignmentCode)
@@ -81,15 +88,15 @@ namespace LearnHub.Infrastructure.Repositories.Assignments
 
         public async Task<Assignment?> AddStudentsToAssignment(string assignmentCode, string studentCode)
         {
-            var assignment = await _context.Set<Assignment>().Include(c => c.AssignedStudents).FirstOrDefaultAsync(a => a.AssignmentCode == assignmentCode);
-            var student = await _context.Set<Student>().Include(s => s.AssignedAssignments).FirstOrDefaultAsync(c => c.RegistrationCode == studentCode);
+            var assignment = await _context.Set<Assignment>().FirstOrDefaultAsync(a => a.AssignmentCode == assignmentCode);
+            var student = await _context.Set<Student>().FirstOrDefaultAsync(c => c.RegistrationCode == studentCode);
             if (assignment == null || student == null)
             {
                 return null;
             }
+            var studentAssignment = new StudentAssignment { Student = student, Assignment = assignment };
 
-            assignment.AssignedStudents?.Add(student);
-            student.AssignedAssignments?.Add(assignment);
+            _context.StudentAssignments.Add(studentAssignment);
             await _context.SaveChangesAsync();
 
             return assignment;
@@ -162,7 +169,7 @@ namespace LearnHub.Infrastructure.Repositories.Assignments
         public string GenerateUniqueAssignmentCode()
         {
             string prefix = "Assignment-";
-            string uniqueCode = Guid.NewGuid().ToString("N").Substring(0, 7).ToUpper();
+            string uniqueCode = Guid.NewGuid().ToString("N")[..7].ToUpper();
             return prefix + uniqueCode;
         }
     }

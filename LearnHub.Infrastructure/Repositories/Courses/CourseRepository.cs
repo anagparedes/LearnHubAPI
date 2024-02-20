@@ -2,25 +2,16 @@
 using LearnHub.Domain.Interfaces;
 using LearnHub.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LearnHub.Infrastructure.Repositories.Courses
 {
-    public class CourseRepository: ICourseRepository
+    public class CourseRepository(LearnHubDbContext context) : ICourseRepository
     {
-        private readonly LearnHubDbContext _context;
-        public CourseRepository(LearnHubDbContext context)
-        {
-            _context = context;
-        }
+        private readonly LearnHubDbContext _context = context;
 
         public async Task<Course> AddInPersonCourseAsync(Course newCourse)
         {
-            newCourse.courseType = Domain.Enums.CourseTypes.InPerson;
+            newCourse.CourseType = Domain.Enums.CourseTypes.InPerson;
             newCourse.CourseCode = GenerateUniqueCourseCode();
 
             // Verify the unicity of CourseCode
@@ -37,7 +28,7 @@ namespace LearnHub.Infrastructure.Repositories.Courses
 
         public async Task<Course> AddOnlineCourseAsync(Course newCourse)
         {
-            newCourse.courseType = Domain.Enums.CourseTypes.Online;
+            newCourse.CourseType = Domain.Enums.CourseTypes.Online;
             newCourse.CourseCode = GenerateUniqueCourseCode();
 
             // Verify the unicity of CourseCode
@@ -161,7 +152,7 @@ namespace LearnHub.Infrastructure.Repositories.Courses
         public string GenerateUniqueCourseCode()
         {
             string prefix = "COURSE-";
-            string uniqueCode = Guid.NewGuid().ToString("N").Substring(0, 7).ToUpper();
+            string uniqueCode = Guid.NewGuid().ToString("N")[..7].ToUpper();
             return prefix + uniqueCode;
         }
     }
