@@ -17,7 +17,7 @@ namespace LearnHub.API.Controllers
     {
         private readonly IUserService _userService = userService;
 
-        //[Authorize(Roles = nameof(Roles.Admin))]
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAllUsers")]
         public async Task<ActionResult<List<GetUser>>> GetAllUsers()
         {

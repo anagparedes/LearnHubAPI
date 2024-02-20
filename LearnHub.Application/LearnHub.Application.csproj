@@ -23,19 +23,4 @@
     <ProjectReference Include="..\LearnHub.Domain\LearnHub.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Administrators\Exceptions\" />
-    <Folder Include="Administrators\Validators\" />
-    <Folder Include="Assignments\Exceptions\" />
-    <Folder Include="Assignments\Validators\" />
-    <Folder Include="Courses\Exceptions\" />
-    <Folder Include="Courses\Validators\" />
-    <Folder Include="Qualifications\Exceptions\" />
-    <Folder Include="Qualifications\Validators\" />
-    <Folder Include="Students\Exceptions\" />
-    <Folder Include="Students\Validators\" />
-    <Folder Include="Teachers\Exceptions\" />
-    <Folder Include="Teachers\Validators\" />
-  </ItemGroup>
-
 </Project>
