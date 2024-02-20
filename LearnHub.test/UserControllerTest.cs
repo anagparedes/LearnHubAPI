@@ -86,8 +86,15 @@ namespace LearnHub.test
         [Fact]
         public async Task GetUserByCode_ReturnsOkResult()
         {
-            var registrationCode = "123";
-            var expectedUser = new GetUser { /* create user instance */ };
+            var registrationCode = "103764";
+            var expectedUser = new GetUser
+            {
+                Id = 2,
+                RegistrationCode = "103764",
+                FullName = "Mario García",
+                Email = "103764@prof.learnhub.edu.do",
+                Role = Roles.Teacher,
+            };
 
             _userServiceMock.Setup(x => x.GetUserByCodeAsync(registrationCode)).ReturnsAsync(expectedUser);
 

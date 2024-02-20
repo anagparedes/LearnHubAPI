@@ -53,7 +53,7 @@ namespace LearnHub.test
             {
 
                 Id = 1,
-                AssignmentCode = assignmentCode,
+                AssignmentCode = "Assignment-F43GE",
                 Title = "Research Paper on a Medical Breakthrough",
                 Description = " Write a research paper that summarizes the discovery, its implications for healthcare."
 

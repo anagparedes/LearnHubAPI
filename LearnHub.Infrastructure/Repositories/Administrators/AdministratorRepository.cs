@@ -13,7 +13,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
         {
             newAdmin.Role = Domain.Enums.Roles.Admin;
             newAdmin.RegistrationCode = GenerateUniqueNumericCode();
-            // Verify the unicity of Code
+
             while (await _context.Set<Admin>().AnyAsync(e => e.RegistrationCode == newAdmin.RegistrationCode))
             {
                 newAdmin.RegistrationCode = GenerateUniqueNumericCode();
@@ -63,7 +63,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
             if (admin.RegistrationCode is null)
             {
                 admin.RegistrationCode = GenerateUniqueNumericCode();
-                // Verify the unicity of RegistrationCode
+              
                 while (await _context.Set<Admin>().AnyAsync(e => e.RegistrationCode == entity.RegistrationCode))
                 {
                     admin.RegistrationCode = GenerateUniqueNumericCode();

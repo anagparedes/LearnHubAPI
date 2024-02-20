@@ -71,7 +71,7 @@ namespace LearnHub.Infrastructure.Repositories.Teachers
             if (teacher.RegistrationCode is null)
             {
                 teacher.RegistrationCode = GenerateUniqueNumericCode();
-                // Verify the unicity of RegistrationCode
+              
                 while (await _context.Set<Teacher>().AnyAsync(e => e.RegistrationCode == teacher.RegistrationCode))
                 {
                     teacher.RegistrationCode = GenerateUniqueNumericCode();

@@ -15,7 +15,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
             newStudent.Status = Domain.Enums.StudentStatus.Active;
             newStudent.RegistrationCode = GenerateUniqueNumericCode();
 
-            // Verify the unicity of RegistrationCode
+
             while (await _context.Set<Student>().AnyAsync(e => e.RegistrationCode == newStudent.RegistrationCode))
             {
                 newStudent.RegistrationCode = GenerateUniqueNumericCode();
@@ -66,7 +66,7 @@ namespace LearnHub.Infrastructure.Repositories.Students
             if (student.RegistrationCode is null)
             {
                 student.RegistrationCode = GenerateUniqueNumericCode();
-                // Verify the unicity of RegistrationCode
+
                 while (await _context.Set<Student>().AnyAsync(e => e.RegistrationCode == entity.RegistrationCode))
                 {
                     student.RegistrationCode = GenerateUniqueNumericCode();

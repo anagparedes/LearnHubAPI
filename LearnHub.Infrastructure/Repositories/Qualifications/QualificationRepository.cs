@@ -36,7 +36,7 @@ namespace LearnHub.Infrastructure.Repositories.Qualifications
             newQualification.EvaluatedTeacher = teacher;
             newQualification.QualificationCode = GenerateUniqueQualificationCode();
 
-            // Verify the unicity of QualificationCode
+
             while (await _context.Set<Qualification>().AnyAsync(e => e.QualificationCode == newQualification.QualificationCode))
             {
                 newQualification.QualificationCode = GenerateUniqueQualificationCode();
@@ -66,7 +66,7 @@ namespace LearnHub.Infrastructure.Repositories.Qualifications
             if (qualification.QualificationCode is null)
             {
                 qualification.QualificationCode = GenerateUniqueQualificationCode();
-                // Verify the unicity of QualificationCode
+
                 while (await _context.Set<Qualification>().AnyAsync(e => e.QualificationCode == newQualification.QualificationCode))
                 {
                     qualification.QualificationCode = GenerateUniqueQualificationCode();
