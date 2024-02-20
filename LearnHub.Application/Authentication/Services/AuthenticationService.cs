@@ -14,16 +14,16 @@ namespace LearnHub.Application.Authentication.Services
 {
     public class AuthenticationService(IConfiguration configuration, IMapper mapper) : IAuthenticationService
     {
-        public static User user = new User();
+        public readonly User user = new();
         private readonly IConfiguration _configuration = configuration;
         private readonly IMapper _mapper = mapper;
 
         public string CreateToken(User user)
         {
-            List<Claim> claims = new List<Claim>
-            {
+            List<Claim> claims =
+            [
                 new Claim(ClaimTypes.Name, user.FullName!)
-            };
+            ];
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
 
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
@@ -42,12 +42,12 @@ namespace LearnHub.Application.Authentication.Services
         {
             if (user.Email != request.Email)
             {
-               UserNotFoundException ex = new UserNotFoundException();
+               UserNotFoundException ex = new();
                 return ex.Message;
             }
             if (!BCrypt.Net.BCrypt.Verify(request.PasswordHash, user.PasswordHash))
             {
-                WrongPasswordException ex = new WrongPasswordException();
+                WrongPasswordException ex = new();
                 return ex.Message;
             }
 

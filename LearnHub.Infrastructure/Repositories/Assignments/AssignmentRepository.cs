@@ -136,7 +136,7 @@ namespace LearnHub.Infrastructure.Repositories.Assignments
             if (assignment.AssignmentCode is null)
             {
                 assignment.AssignmentCode = GenerateUniqueAssignmentCode();
-                // Verify the unicity of CourseCode
+
                 while (await _context.Set<Assignment>().AnyAsync(e => e.AssignmentCode == assignment.AssignmentCode))
                 {
                     assignment.AssignmentCode = GenerateUniqueAssignmentCode();

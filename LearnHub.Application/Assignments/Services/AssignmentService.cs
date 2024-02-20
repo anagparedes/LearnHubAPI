@@ -30,14 +30,16 @@ namespace LearnHub.Application.Assignments.Services
             return _mapper.Map<GetAssignmentWithStudent>(assignment);
         }
 
-        public Task<GetAssignmentWithCourse?> GetAssignmentWithCourseAsync(string assignmentCode)
+        public async Task<GetAssignmentWithCourse?> GetAssignmentWithCourseAsync(string assignmentCode)
         {
-            throw new NotImplementedException();
+            var assignment = await _assignmentRepository.GetAssignmentWithCourseAsync(assignmentCode);
+            return _mapper.Map<GetAssignmentWithCourse>(assignment);
         }
 
-        public Task<GetAssignmentWithTeacher?> GetAssignmentWithTeacherAsync(string assignmentCode)
+        public async Task<GetAssignmentWithTeacher?> GetAssignmentWithTeacherAsync(string assignmentCode)
         {
-            throw new NotImplementedException();
+            var assignment = await _assignmentRepository.GetAssignmentWithTeacherAsync(assignmentCode);
+            return _mapper.Map<GetAssignmentWithTeacher>(assignment);
         }
 
         public async Task<GetAssignment?> GetAssignmentByCodeAsync(string assignmentCode)

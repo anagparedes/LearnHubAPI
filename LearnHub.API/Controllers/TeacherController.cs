@@ -18,7 +18,7 @@ namespace LearnHub.API.Controllers
         private readonly ITeacherService _teacherService = teacherService;
         private readonly IUserService _userService = userService;
 
-        [Authorize(Roles = nameof(Roles.Admin))]
+        //[Authorize(Roles = nameof(Roles.Admin))]
         [HttpGet("/GetAllTeachers")]
         public async Task<ActionResult<List<GetTeacher>>> GetAllTeachers()
         {

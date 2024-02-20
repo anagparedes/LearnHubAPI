@@ -31,7 +31,6 @@ namespace LearnHub.Infrastructure.Context
                 modelBuilder.ApplyConfigurationsFromAssembly(assembly);
             }
 
-            // Relationship between Assignment and Course
             modelBuilder.Entity<Assignment>()
             .HasOne(a => a.Course)
             .WithMany(c => c.Assignments)
@@ -44,36 +43,34 @@ namespace LearnHub.Infrastructure.Context
             .HasForeignKey(c => c.AssignedTeacherId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            // Relationship between Teacher and Courses
+
             modelBuilder.Entity<Teacher>()
             .HasMany(t => t.Courses)
             .WithOne(c => c.AssignedTeacher)
             .HasForeignKey(c => c.AssignedTeacherId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            // Relationship between Teacher and Assignment
+           
             modelBuilder.Entity<Teacher>()
             .HasMany(teacher => teacher.CreatedAssignments)
             .WithOne(assignment => assignment.CreatedTeacher)
             .HasForeignKey(assignment => assignment.TeacherId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            // Relationship between Teacher and Qualification
+            
             modelBuilder.Entity<Teacher>()
             .HasMany(teacher => teacher.Grades)
             .WithOne(qualification => qualification.EvaluatedTeacher)
             .HasForeignKey(qualification => qualification.TeacherId)
             .OnDelete(DeleteBehavior.Restrict);
 
-            // Relationship between Student and Qualification
+           
             modelBuilder.Entity<Student>()
             .HasMany(student => student.Grades)
             .WithOne(qualification => qualification.Student)
             .HasForeignKey(qualification => qualification.StudentId)
             .OnDelete(DeleteBehavior.Restrict);
 
-
-            //Relationship Many2Many Students and Courses
             modelBuilder.Entity<StudentCourse>()
                 .HasKey(sc => new { sc.StudentId, sc.CourseId });
 
@@ -89,7 +86,6 @@ namespace LearnHub.Infrastructure.Context
                 .HasForeignKey(sc => sc.CourseId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //Relationship Many2Many Students and Assignments
             modelBuilder.Entity<StudentAssignment>()
                 .HasKey(sc => new { sc.StudentId, sc.AssignmentId });
 
