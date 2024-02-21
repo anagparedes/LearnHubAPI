@@ -38,7 +38,6 @@ namespace LearnHub.API.Controllers
         {
             try
             {
-                
                 return Ok(await _userService.AddAdminAsync(newAdmin));
             }
             catch (InvalidUserException ex)
