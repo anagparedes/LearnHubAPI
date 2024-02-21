@@ -24,20 +24,20 @@ namespace LearnHub.Application.Authentication.Services
 
         public string CreateToken(User user)
         {
-            List<Claim> claims =
-            [
-                new Claim(ClaimTypes.Name, user.FullName!)
-            ];
-
             string? emailDomain = user.Email?.Split('@').LastOrDefault()?.ToLower();
             Roles userRole = GetUserRoleFromEmailDomain(emailDomain!);
+
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.Name, user.FullName!)
+            };
 
             if (userRole != Roles.Unknown)
             {
                 claims.Add(new Claim(ClaimTypes.Role, userRole.ToString()));
             }
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             var token = new JwtSecurityToken(
@@ -52,11 +52,13 @@ namespace LearnHub.Application.Authentication.Services
 
         public async Task<LoginResponse> Login(LoginRequest request)
         {
-            var user = await _authenticationRepository.GetUserByEmail(request.Email!);
-            string token = CreateToken(user!);
-           user!.Token = token;
+            var user = await _authenticationRepository.GetUserByEmail(request.Email!) ?? throw new UserNotFoundException();
+            string token = CreateToken(user);
+            user.Token = token;
+
             return _mapper.Map<LoginResponse>(user);
         }
+
 
         public GetUser Register(LoginRequest request)
         {
