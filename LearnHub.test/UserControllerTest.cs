@@ -22,7 +22,7 @@ namespace LearnHub.test
         {
             var expectedUsers = new List<GetUser>
             {
-                new GetUser
+                new() 
                 {
                      Id = 1,
                     RegistrationCode = "101864",
@@ -31,7 +31,7 @@ namespace LearnHub.test
                     Role = Roles.Admin,
                 },
 
-                new GetUser
+                new() 
                 {
                     Id = 2,
                     RegistrationCode = "103764",
@@ -39,14 +39,14 @@ namespace LearnHub.test
                     Email = "103764@prof.learnhub.edu.do",
                     Role = Roles.Teacher,
                 },
-                 new GetUser
-                {
+                 new()
+                 {
                     Id = 3,
                     RegistrationCode = "102464",
                     FullName = "Ana Paredes",
                     Email = "102464@est.learnhub.edu.do",
                     Role = Roles.Student,
-                },
+                 },
 
             };
 

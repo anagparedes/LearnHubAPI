@@ -17,7 +17,7 @@ namespace LearnHub.Application.Authentication.Validators
                 .EmailAddress()
                 .WithMessage("Por favor, ingrese una dirección de correo electrónico válida");
 
-            RuleFor(request => request.PasswordHash)
+            RuleFor(request => request.Password)
                 .NotEmpty()
                 .WithMessage("La contraseña es obligatoria");
         }

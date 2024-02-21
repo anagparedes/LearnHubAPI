@@ -58,7 +58,7 @@ namespace LearnHub.Infrastructure.Repositories.Administrators
             admin.LastName = entity.LastName;
             admin.FullName = $"{entity.FirstName} {entity.LastName}";
             admin.Email = entity.Email;
-            admin.PasswordHash = entity.PasswordHash;
+            admin.Password = entity.Password;
          
             if (admin.RegistrationCode is null)
             {

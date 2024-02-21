@@ -66,7 +66,7 @@ namespace LearnHub.Application.Users.Services
         public async Task<GetUser?> GetUserByCodeAsync(string registrationCode)
         {
             var getUserByCodeValidator = new GetUserValidator();
-            var newUser = new GetUser // Assuming GetUser has a RegistrationCode property
+            var newUser = new GetUser
             {
                 RegistrationCode = registrationCode
             };
@@ -101,7 +101,7 @@ namespace LearnHub.Application.Users.Services
                 Gender = createStudent.Gender,
                 Telephone = createStudent.Telephone,
                 IdentificationCard = createStudent.IdentificationCard,
-                PasswordHash = createStudent.PasswordHash,
+                Password = createStudent.Password,
             };
             var newStudent = await _studentRepository.AddAsync(student);
             return _mapper.Map<GetStudent>(newStudent);
@@ -156,7 +156,7 @@ namespace LearnHub.Application.Users.Services
                 Gender = createTeacher.Gender,
                 Telephone = createTeacher.Telephone,
                 IdentificationCard = createTeacher.IdentificationCard,
-                PasswordHash = createTeacher.PasswordHash,
+                Password = createTeacher.Password,
             };
             var newTeacher = await _teacherRepository.AddAsync(teacher);
             return _mapper.Map<GetTeacher>(newTeacher);
@@ -205,7 +205,7 @@ namespace LearnHub.Application.Users.Services
             {
                 FirstName = createAdmin.FirstName,
                 LastName = createAdmin.LastName,
-                PasswordHash = createAdmin.PasswordHash,
+                Password = createAdmin.Password,
             };
             var newAdmin = await _administratorRepository.AddAsync(admin);
             return _mapper.Map<GetAdmin>(newAdmin);
@@ -228,7 +228,7 @@ namespace LearnHub.Application.Users.Services
                 FirstName = updateAdmin.FirstName,
                 LastName = updateAdmin.LastName,
                 Email = updateAdmin.Email,
-                PasswordHash = updateAdmin.PasswordHash,
+                Password = updateAdmin.Password,
             };
             var newAdmin = await _administratorRepository.UpdateAsync(registrationCode, admin);
             return _mapper.Map<GetAdmin>(newAdmin);

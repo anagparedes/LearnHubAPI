@@ -17,5 +17,8 @@ namespace LearnHub.Domain.Enums
 
         [Description("Student")]
         Student = 3,
+
+        [Description("Unknown")]
+        Unknown = 4,
     }
 }

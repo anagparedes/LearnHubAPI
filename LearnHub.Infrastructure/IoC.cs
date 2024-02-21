@@ -2,6 +2,7 @@
 using LearnHub.Domain.Interfaces;
 using LearnHub.Infrastructure.Repositories.Administrators;
 using LearnHub.Infrastructure.Repositories.Assignments;
+using LearnHub.Infrastructure.Repositories.Authentication;
 using LearnHub.Infrastructure.Repositories.Courses;
 using LearnHub.Infrastructure.Repositories.Qualifications;
 using LearnHub.Infrastructure.Repositories.Students;
@@ -17,6 +18,7 @@ namespace LearnHub.Infrastructure
         {
             return service
                 .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IAuthenticationRepository, AuthenticationRepository>()
                 .AddScoped<IStudentRepository, StudentRepository>()
                 .AddScoped<IAdministratorRepository, AdministratorRepository>()
                 .AddScoped<ITeacherRepository, TeacherRepository>()

@@ -72,7 +72,7 @@ namespace LearnHub.test
                 Gender = Gender.Female,
                 Career = "Economy",
                 Telephone = "829-443-3032",
-                PasswordHash = "$student01",
+                Password = "$student01",
             };
             var expectedStudent = new GetStudent 
             {

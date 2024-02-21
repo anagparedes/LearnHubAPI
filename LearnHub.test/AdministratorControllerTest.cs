@@ -61,7 +61,7 @@ namespace LearnHub.test
             { 
                 FirstName= "Mario",
                 LastName="García",
-                PasswordHash="@admin432"
+                Password="@admin432"
             };
             var expectedAdmin = new GetAdmin
             {

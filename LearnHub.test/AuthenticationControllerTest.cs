@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using LearnHub.Application.Users.Dtos;
 using LearnHub.Domain.Enums;
 using LearnHub.Domain.Entities;
+using LearnHub.Application.Authentication.Dtos;
 
 namespace LearnHub.test
 {
@@ -27,7 +28,7 @@ namespace LearnHub.test
             var loginRequest = new LoginRequest
             {
                 Email = "1024573@admin.learnhub.edu.do",
-                PasswordHash = "$hashedPassword"
+                Password = "$hashedPassword"
             };
             var expectedUser = new GetUser
             {
@@ -35,7 +36,7 @@ namespace LearnHub.test
                 RegistrationCode = "1014573",
                 FullName = "John Guzman",
                 Email = "1024573@admin.learnhub.edu.do",
-                Role = Roles.Admin 
+                Role = Roles.Admin
             };
 
             _authenticationServiceMock.Setup(x => x.Register(loginRequest)).Returns(expectedUser);
@@ -55,29 +56,40 @@ namespace LearnHub.test
         }
 
         [Fact]
-        public void Login_ValidRequest_ReturnsOkResult()
+        public async Task Login_ValidRequest_ReturnsOkResult()
         {
 
             var loginRequest = new LoginRequest
             {
                 Email = "1024573@admin.learnhub.edu.do",
-                PasswordHash = "$hashedPassword"
+                Password = "$hashedPassword"
             };
-            var expectedToken = "adminToken";
+            var loginResponse = new LoginResponse
+            {
+                Email = "1024573@admin.learnhub.edu.do",
+                Password = "$hashedPassword",
+                Token = "adminToken",
+            };
 
-            _authenticationServiceMock.Setup(x => x.Login(loginRequest)).Returns(expectedToken);
+            _authenticationServiceMock.Setup(x => x.Login(loginRequest)).ReturnsAsync(loginResponse);
 
 
-            var actionResult = _authenticationController.Login(loginRequest);
-            var result = actionResult as ActionResult<User>;
+            var actionResultTask = _authenticationController.Login(loginRequest);
+            var actionResult = await actionResultTask;
 
+            var result = actionResult.Result as OkObjectResult;
 
             Assert.NotNull(result);
 
-            var okObjectResult = result.Result as OkObjectResult;
+            var actualLoginResponse = result.Value as LoginResponse;
 
-            Assert.NotNull(okObjectResult);
-            Assert.Equal(expectedToken, okObjectResult.Value);
+            Assert.NotNull(actualLoginResponse);
+
+            Assert.NotNull(actualLoginResponse);
+
+            Assert.Equal(loginResponse.Email, actualLoginResponse.Email);
+            Assert.Equal(loginResponse.Password, actualLoginResponse.Password);
+            Assert.Equal(loginResponse.Token, actualLoginResponse.Token);
         }
     }
 }

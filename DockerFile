@@ -1,0 +1,29 @@
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+ENV ASPNETCORE_URLS=https//+:5001;http://+:5000
+WORKDIR /app
+EXPOSE 5000
+EXPOSE 5001
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS build
+
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt install -y nodejs
+WORKDIR /src
+COPY ["src/LearnHub.API/LearnHub.API.csproj", "src/LearnHub.API/"]
+COPY ["src/LearnHub.Application/LearnHub.Application.csproj", "src/LearnHub.Application/"]
+COPY ["src/LearnHub.Domain/LearnHub.Domain.csproj", "src/LearnHub.Domain/"]
+COPY ["src/LearnHub.Infrastructure/LearnHub.Infrastructure.csproj", "src/LearnHub.Infrastructure/"]
+RUN dotnet restore "src/LearnHub.API/LearnHub.API.csproj"
+COPY . .
+WORKDIR "/src/src/LearnHub.API"
+RUN dotnet build "LearnHub.API.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "LearnHub.API.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT [ "dotnet", "LearnHub.API.dll"]
+
+

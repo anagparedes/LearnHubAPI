@@ -2,6 +2,11 @@ using LearnHub.API.Config;
 using LearnHub.Application;
 using LearnHub.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,8 +25,28 @@ builder.Services.ConfigDbConnection(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddAuthentication().AddJwtBearer();
+builder.Services.AddSwaggerGen(options => 
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme() 
+    {
+        In = ParameterLocation.Header,
+        Name = "Authenticate",
+        Type = SecuritySchemeType.ApiKey
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+});
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication().AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        RoleClaimType = ClaimTypes.Role,
+        ValidateIssuerSigningKey = false,
+        ValidateAudience = false,
+        ValidateIssuer = false,
+    };
+});
 
 var app = builder.Build();
 
@@ -36,6 +61,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

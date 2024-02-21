@@ -10,7 +10,7 @@ namespace LearnHub.Application.Students.Dtos
         public Gender Gender { get; set; }
         public string? Career { get; set; }
         public string? Telephone { get; set; }
-        public string? PasswordHash { get; set; }
+        public string? Password { get; set; }
 
     }
 }
