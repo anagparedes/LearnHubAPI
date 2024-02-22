@@ -1,29 +1,27 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-ENV ASPNETCORE_URLS=https//+:5001;http://+:5000
+ENV ASPNETCORE_ENVIRONMENT=Development
+USER app
 WORKDIR /app
-EXPOSE 5000
-EXPOSE 5001
+EXPOSE 8080
+EXPOSE 8081
 
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS build
-
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install -y nodejs
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
-COPY ["src/LearnHub.API/LearnHub.API.csproj", "src/LearnHub.API/"]
-COPY ["src/LearnHub.Application/LearnHub.Application.csproj", "src/LearnHub.Application/"]
-COPY ["src/LearnHub.Domain/LearnHub.Domain.csproj", "src/LearnHub.Domain/"]
-COPY ["src/LearnHub.Infrastructure/LearnHub.Infrastructure.csproj", "src/LearnHub.Infrastructure/"]
-RUN dotnet restore "src/LearnHub.API/LearnHub.API.csproj"
+COPY ["LearnHub.API/LearnHub.API.csproj", "LearnHub.API/"]
+COPY ["LearnHub.Application/LearnHub.Application.csproj", "LearnHub.Application/"]
+COPY ["LearnHub.Domain/LearnHub.Domain.csproj", "LearnHub.Domain/"]
+COPY ["LearnHub.Infrastructure/LearnHub.Infrastructure.csproj", "LearnHub.Infrastructure/"]
+RUN dotnet restore "./LearnHub.API/./LearnHub.API.csproj"
 COPY . .
-WORKDIR "/src/src/LearnHub.API"
-RUN dotnet build "LearnHub.API.csproj" -c Release -o /app/build
+WORKDIR "/src/LearnHub.API"
+RUN dotnet build "./LearnHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "LearnHub.API.csproj" -c Release -o /app/publish
+ARG BUILD_CONFIGURATION=Debug
+RUN dotnet publish "./LearnHub.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT [ "dotnet", "LearnHub.API.dll"]
-
-
+ENTRYPOINT ["dotnet", "LearnHub.API.dll"]
